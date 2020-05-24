@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Séries de type {{ category }} {% endblock %}
+
+{% block body %}
+    <h1>Toutes les séries de cette catégorie </h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col">Résumé</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for program in programs %}
+            <tr>
+                <th scope="row">{{ program.id }} / {{ program.title }}</th>
+                <td>{{ program.summary }}</td>
+            </tr>
+        {% else %}
+            Aucune série trouvée dans la catégorie {{ category }}.
+        {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+{% endblock %}
