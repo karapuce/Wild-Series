@@ -3,15 +3,27 @@
 
 {% block body %}
 
-    <h2>{{ slug }}</h2>
 
-    <ul>
-            {% for season in seasons %}
-                <li>
-                    <a href="/wild/showSeason/{{ season.id }}">Saison {{ season.number }}</a>
-                </li>
-            {% endfor %}
-    </ul>
+    <div class="row">
+        <img class="col-4" src="{{ program.poster }}" alt="Card image cap">
+        <div class="card col-4">
+            <div class="card-header">
+                {{ slug }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ program.summary }}</p>
+                <ul class="list-group">
+                    {% for season in seasons %}
+                        <li class="list-group-item">
+                            <a href="/wild/showSeason/{{ season.id }}">Saison {{ season.number }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
 
     <a href="{{ path('wild_index') }}">
         Retour à la liste des Shows
