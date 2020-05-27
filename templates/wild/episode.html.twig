@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <h2>{{ episode.title }}, episode {{ episode.number }}</h2>
+        <p>Saison {{ season.number }} de {{ program.title }}</p>
+        <div>
+            <p>{{ episode.synopsis }}</p>
+        </div>
+
+        <button class="btn-primary" >
+            <a class="text-light" href="/wild/showSeason/{{ season.id }}">
+                Retour à la saison
+            </a>
+        </button>
+        <button class="btn-primary" >
+            <a class="text-light" href="/wild/showProgram/{{ program.title|replace({' ': "-"})|lower }}">
+                Retour à la série
+            </a>
+        </button>
+    </div>
+
+
+{% endblock %}

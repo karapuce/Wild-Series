@@ -12,7 +12,7 @@
             <h5>Liste des épisodes</h5>
             <ul>
                 {% for episode in episodes %}
-                    <li><strong>Episode {{ episode.number }} :</strong>  {{ episode.title }}</li>
+                    <li><strong>Episode {{ episode.number }} :</strong>  <a href="{{ path('wild_show_episode', {'id': episode.id }) }}">{{ episode.title }}</a> </li>
                     <ul>
                         <li>{{ episode.synopsis }}</li>
                     </ul>
