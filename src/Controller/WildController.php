@@ -6,10 +6,14 @@ use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CategoryType;
+use App\Form\ProgramSearchType;
 use phpDocumentor\Reflection\Types\Mixed_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 /**
  * @Route("/wild", name="wild_")
@@ -29,8 +33,24 @@ class WildController extends AbstractController
             );
         }
 
+        $form = $this->createForm(
+            ProgramSearchType::class, null,
+            ['method'=>Request::METHOD_GET]
+        );
+//        $category = new Category();
+//        $form = $this->createForm(CategoryType::class, $category);
+//        $form->handleRequest();
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            // $data contains $_POST data so search
+            // ??
+        }
+
+
         return $this->render('wild/index.html.twig', [
-            'programs' => $programs
+            'programs' => $programs,
+            'form'=>$form->createView()
         ]);
     }
 
@@ -153,6 +173,5 @@ class WildController extends AbstractController
         );
 
     }
-
 
 }

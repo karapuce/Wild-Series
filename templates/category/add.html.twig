@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add new category{% endblock %}
+
+{% block body %}
+
+
+    {{ form_start(form) }}
+    {{ form_row(form) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('category_index') }}">
+        Retour à l'accueil
+    </a>
+{% endblock %}
