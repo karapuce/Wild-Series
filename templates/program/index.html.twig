@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Summary</th>
+                <th>Seasons</th>
                 <th>Poster</th>
                 <th>actions</th>
             </tr>
@@ -21,6 +22,15 @@
                 <td>{{ program.id }}</td>
                 <td>{{ program.title }}</td>
                 <td>{{ program.summary }}</td>
+                <td>
+                    <ul class="list-group">
+                        {% for season in program.seasons %}
+                            <li class="list-group-item">
+                                <a href="/wild/showSeason/{{ season.id }}">Saison {{ season.number }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
                 <td>{{ program.poster }}</td>
                 <td>
                     <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
