@@ -19,10 +19,10 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
         {
             $episode = new Episode();
             $faker = Faker\Factory::create('fr_FR');
-            $episode->setNumber($faker->numberBetween(1,10));
+            $episode->setNumber($faker->numberBetween(1,19));
             $episode->setTitle($faker->word());
             $episode->setSynopsis($faker->text(100));
-            $episode->setSeason($this->getReference('season_id_'.$faker->numberBetween(1,10)));
+            $episode->setSeason($this->getReference('season_id_'.$faker->numberBetween(0,49)));
             $manager->persist($episode);
         }
         $manager->flush();
