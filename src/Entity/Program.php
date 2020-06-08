@@ -2,16 +2,17 @@
 
 namespace App\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProgramRepository")
+ * @UniqueEntity(fields={"title"}, message="ce titre existe déjà")
  */
+
 class Program
 {
     /**
@@ -22,15 +23,15 @@ class Program
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Il faut toujours remplir ses champs!")
-     * @Assert\Length(max="255")
+     * @ORM\Column(type="string", length=255, name="title", unique=true)
+     * @Assert\NotBlank(message="Fill me please")
+     * @Assert\Length(max="255", maxMessage="La catégorie saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Le résumé ne peut pas être vide quand même!")
+     * @Assert\NotBlank(message="Fill me please")
      */
     private $summary;
 
@@ -65,15 +66,6 @@ class Program
         $this->seasons = new ArrayCollection();
         $this->actors = new ArrayCollection();
     }
-
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addConstraint(new UniqueEntity([
-            'fields' => 'title',
-            'message' => 'Ce titre existe déjà'
-        ]));
-    }
-
 
     public function getId(): ?int
     {
@@ -128,11 +120,14 @@ class Program
         return $this;
     }
 
-
     /**
-     * @param Season $season
-     * @return $this
+     * @return Collection|Season[]
      */
+    public function getSeasons(): Collection
+    {
+        return $this->seasons;
+    }
+
     public function addSeason(Season $season): self
     {
         if (!$this->seasons->contains($season)) {
@@ -143,10 +138,6 @@ class Program
         return $this;
     }
 
-    /**
-     * @param Season $season
-     * @return $this
-     */
     public function removeSeason(Season $season): self
     {
         if ($this->seasons->contains($season)) {
@@ -156,26 +147,6 @@ class Program
                 $season->setProgram(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Season[]
-     */
-    public function getSeasons(): Collection
-    {
-        return $this->seasons;
-    }
-
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
-
-    public function setYear(int $year): self
-    {
-        $this->year = $year;
 
         return $this;
     }
@@ -219,5 +190,4 @@ class Program
 
         return $this;
     }
-
 }
