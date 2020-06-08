@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+    <body style="background-color: #E76A77">
+
+    {% apply inky_to_html %}
+        <container>
+            <row class="header">
+                <columns>
+                    <spacer size="16"></spacer>
+                    <h1 class="text-center" >Nouvelle Série!</h1>
+                </columns>
+            </row>
+
+            <row>
+                <columns>
+                    <h3>{{ program.title }}</h3>
+                    <p>{{ program.summary }}</p>
+                    <p>Type: {{ program.category.name }}</p>
+                    <h5>Et retrouver des acteurs d'exceptions:</h5>
+                    <table style="border: solid 1px black">
+                        {% for actor in program.actors  %}
+                        <tr>
+                            <td>{{ actor.name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <p class="text-center">Venez vite sur <a href="">Wild-Séries</a> pour la découvrir!</p>
+                </columns>
+            </row>
+        </container>
+    {% endapply %}
+    </body>
+</html>

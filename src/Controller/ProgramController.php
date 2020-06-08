@@ -9,7 +9,10 @@ use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 /**
  * @Route("/program")
@@ -32,9 +35,11 @@ class ProgramController extends AbstractController
      * @Route("/new", name="program_new", methods={"GET","POST"})
      * @param Request $request
      * @param Slugify $slugify
-     * @return Response
+     * @param MailerInterface $mailer
+     *  @return Response
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -46,6 +51,22 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
+
+            $content = $this->renderView(
+                'program/email/notif.html.twig',
+                array('program' => $program)
+            );
+
+            $exped = $this->getParameter('mailer_from');
+
+
+            $email = (new Email())
+                ->from($exped)
+                ->to('typhaine.demangeon@gmail.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($content);
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('program_index');
         }
