@@ -25,10 +25,25 @@
             </tr>
             <tr>
                 <th>Série</th>
-                <td>{{ episode.season.program }}</td>
+                <td>{{ program.title }}</td>
             </tr>
         </tbody>
     </table>
+
+    {% if app.user %}
+        <h4>Commenter la série</h4>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Soumette') }}</button>
+        {{ form_end(form) }}
+    {% endif %}
+
+    <h4>Commentaires</h4>
+    <ul>
+    {% for commentaire in episode.comments|sort %}
+        <li>Note: {{ commentaire.rate }} || avis: {{ commentaire.comment }}</li>
+    {% endfor %}
+    </ul>
 
     <a href="{{ path('episode_index') }}">back to list</a>
 
