@@ -42,6 +42,12 @@
     <ul>
     {% for commentaire in episode.comments|sort %}
         <li>Note: {{ commentaire.rate }} || avis: {{ commentaire.comment }}</li>
+        {% if app.user is same as (commentaire.author) %}
+            <a href="{{ path('comment_edit', {id : commentaire.id}) }}">Editer</a>
+            <a href="{{ path('comment_delete', {id : commentaire.id}) }}">Supprimer</a>
+
+
+        {% endif %}
     {% endfor %}
     </ul>
 
