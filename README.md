@@ -1,4 +1,4 @@
 # Wild-Series
 Quest for Symfony - Wild Code School
 
-Quest 21 (vidéo) : https://www.loom.com/share/0d8ff9e1d583468a894f0c161b7caba4
+Quest 22 (vidéo) : https://www.loom.com/share/47d3d1048171460e93e74fd67bd775da

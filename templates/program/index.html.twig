@@ -8,30 +8,20 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Summary</th>
-                <th>Seasons</th>
-                <th>Poster</th>
-                <th>actions</th>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Acteurs</th>
+                <th scope="col">actions</th>
             </tr>
         </thead>
         <tbody>
         {% for program in programs %}
             <tr>
                 <td>{{ program.id }}</td>
-                <td>{{ program.title }}</td>
+                <th>{{ program.title }}</th>
                 <td>{{ program.summary }}</td>
-                <td>
-                    <ul class="list-group">
-                        {% for season in program.seasons %}
-                            <li class="list-group-item">
-                                <a href="/season/{{ season.id }}">Saison {{ season.number }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td>{{ program.poster }}</td>
+                <td>{% for actor in program.actors %}{{ actor.name }}{% if not loop.last %},{% endif %} {% endfor %}{% if program.actors is empty %}Aucun acteur{% endif %}</td>
                 <td>
                     <a href="{{ path('program_show', {'slug': program.slug}) }}">show</a>
                     {% if is_granted('ROLE_ADMIN') %}

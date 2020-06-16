@@ -44,7 +44,7 @@ class Program
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="programs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Category;
+    private $category;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Season", mappedBy="program")
@@ -110,12 +110,12 @@ class Program
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setCategory(?Category $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
