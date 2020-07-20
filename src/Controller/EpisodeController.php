@@ -45,7 +45,7 @@ class EpisodeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($episode);
             $entityManager->flush();
-            $this->addFlash('success', 'The new program has been created');
+            $this->addFlash('success', 'The new episode has been created');
 
             return $this->redirectToRoute('episode_index');
         }
@@ -124,7 +124,7 @@ class EpisodeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($episode);
             $entityManager->flush();
-            $this->addFlash('danger', 'The season has been deleted');
+            $this->addFlash('danger', 'The episode has been deleted');
 
         }
 
