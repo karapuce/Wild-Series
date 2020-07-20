@@ -6,7 +6,11 @@ use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -86,8 +90,10 @@ class ProgramController extends AbstractController
      */
     public function show(Program $program, Slugify $slugify): Response
     {
+        $user = $this->getUser();
         $slug = $slugify->generate($program->getTitle());
         $program -> setSlug($slug);
+
         return $this->render('program/show.html.twig', [
             'program' => $program,
         ]);
@@ -136,4 +142,26 @@ class ProgramController extends AbstractController
 
         return $this->redirectToRoute('program_index');
     }
+
+    /**
+     * @Route("/{id}/watchlist", name="program_watchlist", methods={"GET","POST"})
+     * @param Program $program
+     * @param EntityManagerInterface $manager
+     * @return JsonResponse
+     */
+    public function addToWatchlist(Program $program, EntityManagerInterface $manager){
+        if ($this->getUser()->getPrograms()->contains($program)) {
+            $this->getUser()->removeProgram($program)   ;
+            $this->addFlash('success','program removed from watchlist');
+        }
+        else {
+            $this->getUser()->addProgram($program);
+            $this->addFlash('success','program added to watchlist');
+        }
+
+        $manager->flush();
+
+        return $this->json([
+            'isInWatchlist' => $this->getUser()->isInWatchlist($program)
+        ]);    }
 }

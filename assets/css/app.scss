@@ -3,6 +3,7 @@ $theme-colors: (
         "secondary": #E76A77
 );
 @import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
 ul, li {
   list-style: none;

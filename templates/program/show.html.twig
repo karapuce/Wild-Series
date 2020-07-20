@@ -3,7 +3,8 @@
 {% block title %}Program{% endblock %}
 
 {% block body %}
-    <h1>Program</h1>
+    <h1>Program {{ program.title }}
+        <i class=" watch  {{ app.user.isInWatchlist(program) ? 'fas' : 'far' }} fa-heart" data-href="{{path('program_watchlist', {'id': program.id})}}"></i>    </h1>
 
     <table class="table">
         <tbody>
@@ -13,7 +14,10 @@
             </tr>
             <tr>
                 <th>Title</th>
-                <td>{{ program.title }}</td>
+                <td>{{ program.title }}
+
+                </td>
+
             </tr>
             <tr>
                 <th>Summary</th>
@@ -41,4 +45,8 @@
     {% endif %}
 
     {{ include('program/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+            {{ encore_entry_script_tags('watchlist') }}
 {% endblock %}

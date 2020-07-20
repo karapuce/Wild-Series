@@ -12,6 +12,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Summary</th>
                 <th scope="col">Acteurs</th>
+                <th scope="col">Add</th>
                 <th scope="col">actions</th>
             </tr>
         </thead>
@@ -22,6 +23,9 @@
                 <th>{{ program.title }}</th>
                 <td>{{ program.summary }}</td>
                 <td>{% for actor in program.actors %}{{ actor.name }}{% if not loop.last %},{% endif %} {% endfor %}{% if program.actors is empty %}Aucun acteur{% endif %}</td>
+                <td>
+                    <i class=" watch  {{ app.user.isInWatchlist(program) ? 'fas' : 'far' }} fa-heart" data-href="{{path('program_watchlist', {'id': program.id})}}"></i>    </h1>
+                </td>
                 <td>
                     <a href="{{ path('program_show', {'slug': program.slug}) }}">show</a>
                     {% if is_granted('ROLE_ADMIN') %}
@@ -38,4 +42,8 @@
     </table>
 
     <a href="{{ path('program_new') }}">Create new</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('watchlist') }}
 {% endblock %}
