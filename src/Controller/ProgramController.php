@@ -51,6 +51,7 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
+            $this->addFlash('success', 'The new program has been created');
 
             $content = $this->renderView(
                 'program/email/notif.html.twig',
@@ -105,6 +106,8 @@ class ProgramController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'The program has been edited');
+
 
             return $this->redirectToRoute('program_index');
         }
@@ -127,6 +130,8 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($program);
             $entityManager->flush();
+            $this->addFlash('danger', 'The program has been deleted');
+
         }
 
         return $this->redirectToRoute('program_index');

@@ -12,10 +12,17 @@
         {% include "layout/navbar.html.twig" %}
     </header>
         <body class="bg-secondary">
+        {% for category, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
             {% block body %}{% endblock %}
         </body>
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+
         {% endblock %}
     </body>
 </html>
